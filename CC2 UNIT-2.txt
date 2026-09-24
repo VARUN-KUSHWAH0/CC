@@ -1,0 +1,42 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
+        # Initialize the successor as None
+        successor = None
+        current = root
+        
+        # Traverse the tree
+        while current:
+            if p.val < current.val:
+                # Current node is a possible successor
+                successor = current
+                current = current.left  # Move left to find a closer successor
+            else:
+                # Go right to find a node greater than p.val
+                current = current.right
+        
+        return successor
+
+# Example Usage
+# Constructing BST:
+#        20
+#       /  \
+#     10   30
+#       \
+#       15
+
+root = TreeNode(20)
+root.left = TreeNode(10)
+root.right = TreeNode(30)
+root.left.right = TreeNode(15)
+
+p = root.left  # Node with value 10
+
+solution = Solution()
+succ = solution.inorderSuccessor(root, p)
+print(succ.val if succ else None)  # Output: 15
